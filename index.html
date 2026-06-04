@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deosil Rede Draygo — Animation Series</title>
+
+  <!-- Open Graph / Facebook meta tags (auto-populated per episode) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Deosil Rede Draygo" />
+  <meta property="og:title" content="Deosil Rede Draygo — Animation Series" />
+  <meta property="og:description" content="Watch the full HTML5 animation series from Deosil Rede Draygo." />
+  <meta property="og:image" content="images/og-default.png" />
+  <meta property="og:url" content="" id="og-url" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo-wrap">
+        <img src="images/logo.png" alt="Deosil Rede Draygo logo" class="site-logo" onerror="this.style.display='none'" />
+        <h1 class="site-title">Deosil Rede Draygo</h1>
+      </div>
+      <p class="site-tagline">Animation Series</p>
+      <nav class="series-nav" id="series-nav">
+        <!-- Series filter buttons injected by JS -->
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== HERO BANNER ===== -->
+  <section class="hero">
+    <div class="hero-inner">
+      <h2 class="hero-headline">Watch. Share. Connect.</h2>
+      <p class="hero-sub">Explore our growing library of HTML5 animations — free to watch, easy to share.</p>
+      <a href="#episodes" class="btn btn-primary">Browse Episodes</a>
+    </div>
+  </section>
+
+  <!-- ===== EPISODE GALLERY ===== -->
+  <main id="episodes" class="episodes-section">
+    <div class="section-header">
+      <h2 class="section-title">Episodes</h2>
+      <input type="text" id="search-box" class="search-box" placeholder="Search episodes…" aria-label="Search episodes" />
+    </div>
+    <div class="episode-grid" id="episode-grid">
+      <!-- Cards injected by episodes.js -->
+    </div>
+    <p class="no-results hidden" id="no-results">No episodes found. Try a different search.</p>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <p>
+      &copy; <span id="footer-year"></span> Deosil Rede Draygo &mdash;
+      <a href="https://www.facebook.com/DesoilRedeDraygo" target="_blank" rel="noopener">Facebook Page</a>
+    </p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/episodes.js"></script>
+  <script src="js/gallery.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loading… — Deosil Rede Draygo</title>
+
+  <!-- Open Graph tags (filled dynamically) -->
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="Deosil Rede Draygo" />
+  <meta property="og:title"       id="og-title"       content="" />
+  <meta property="og:description" id="og-description" content="" />
+  <meta property="og:image"       id="og-image"       content="" />
+  <meta property="og:url"         id="og-url"         content="" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo-wrap">
+        <img src="images/logo.png" alt="Deosil Rede Draygo logo" class="site-logo" onerror="this.style.display='none'" />
+        <h1 class="site-title">Deosil Rede Draygo</h1>
+      </div>
+      <p class="site-tagline">Animation Series</p>
+    </div>
+  </header>
+
+  <!-- ===== PLAYER PAGE ===== -->
+  <div class="player-page" id="player-page">
+
+    <p class="player-breadcrumb">
+      <a href="index.html">&larr; All Episodes</a>
+    </p>
+
+    <!-- Animation player -->
+    <div class="player-wrap" id="player-wrap">
+      <!-- iframe injected by JS -->
+    </div>
+
+    <!-- Meta -->
+    <div class="player-meta">
+      <span class="player-series-badge" id="player-series">Series</span>
+      <h2 class="player-title" id="player-title">Loading…</h2>
+      <p class="player-desc" id="player-desc"></p>
+    </div>
+
+    <!-- Share bar -->
+    <div class="player-share-bar">
+      <span class="share-label">Share on Facebook</span>
+      <input type="text" class="share-url-box" id="share-url-box" readonly aria-label="Episode URL" />
+      <button class="btn btn-copy" id="copy-link-btn">&#128279; Copy Link</button>
+      <a class="btn btn-gold" id="fb-share-btn" href="#" target="_blank" rel="noopener">
+        Share on Facebook
+      </a>
+    </div>
+
+    <!-- Prev / Next navigation -->
+    <nav class="episode-nav" id="episode-nav">
+      <!-- injected by JS -->
+    </nav>
+
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <p>
+      &copy; <span id="footer-year"></span> Deosil Rede Draygo &mdash;
+      <a href="https://www.facebook.com/DesoilRedeDraygo" target="_blank" rel="noopener">Facebook Page</a>
+    </p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/episodes.js"></script>
+  <script src="js/player.js"></script>
+</body>
+</html>

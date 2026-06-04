@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <rect width="1280" height="720" fill="#1a1f2e"/>
+  <rect x="40" y="40" width="1200" height="640" rx="12" fill="#242b3d" stroke="#2e3650" stroke-width="2"/>
+  <!-- Play triangle -->
+  <circle cx="640" cy="330" r="90" fill="#2e3650"/>
+  <polygon points="610,295 610,365 685,330" fill="#7ec8a0"/>
+  <!-- Text -->
+  <text x="640" y="470" text-anchor="middle" font-family="Georgia,serif" font-size="36" fill="#c9a96e" letter-spacing="4">Deosil Rede Draygo</text>
+  <text x="640" y="520" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" fill="#8a95b0">Animation Series</text>
+</svg>

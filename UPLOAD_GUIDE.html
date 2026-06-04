@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baby Princess - Episode Upload Helper</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { 
+    background:#1a1a1a; 
+    font-family:'Comic Neue',cursive; 
+    color:#fff;
+    padding:20px;
+    max-width:900px;
+    margin:0 auto;
+  }
+  h1 { color:#FFD700; text-shadow:2px 2px 0 #000; margin-bottom:20px; }
+  .section { 
+    background:rgba(255,255,255,0.05); 
+    border:2px solid #9b59b6; 
+    border-radius:8px; 
+    padding:20px; 
+    margin-bottom:20px;
+  }
+  .code-block {
+    background:#000;
+    border:2px solid #27ae60;
+    border-radius:6px;
+    padding:15px;
+    overflow-x:auto;
+    font-family:monospace;
+    font-size:0.9em;
+    color:#00ff00;
+    margin:10px 0;
+  }
+  .step {
+    background:rgba(39,174,96,0.1);
+    border-left:4px solid #27ae60;
+    padding:15px;
+    margin:10px 0;
+    border-radius:4px;
+  }
+  .step-number {
+    color:#FFD700;
+    font-weight:700;
+    font-size:1.2em;
+  }
+  .warning {
+    background:rgba(204,0,0,0.1);
+    border:2px solid #cc0000;
+    border-radius:6px;
+    padding:15px;
+    color:#ff6666;
+    margin:15px 0;
+  }
+  .success {
+    background:rgba(39,174,96,0.1);
+    border:2px solid #27ae60;
+    border-radius:6px;
+    padding:15px;
+    color:#27ae60;
+    margin:15px 0;
+  }
+  a { color:#FFD700; text-decoration:none; border-bottom:1px dotted #FFD700; }
+  a:hover { color:#fff; }
+  table {
+    width:100%;
+    border-collapse:collapse;
+    margin:15px 0;
+  }
+  th, td {
+    border:1px solid #9b59b6;
+    padding:10px;
+    text-align:left;
+  }
+  th {
+    background:#9b59b6;
+    color:#fff;
+  }
+</style>
+</head>
+<body>
+
+<h1>🐾 Baby Princess Episode Upload Guide</h1>
+
+<div class="section">
+  <h2>Quick Start: Adding New Episodes</h2>
+  <p>Follow these steps to upload new episodes from your live site:</p>
+</div>
+
+<div class="step">
+  <span class="step-number">Step 1:</span> Export Your Episode HTML
+  <p>From your live site, save the complete HTML5 episode file locally. Make sure it includes:</p>
+  <ul style="margin-left:20px;margin-top:10px;">
+    <li>✅ All inline CSS (no external stylesheets)</li>
+    <li>✅ All SVG graphics (embedded, not external)</li>
+    <li>✅ All JavaScript (inline, not external)</li>
+    <li>✅ Complete HTML structure</li>
+  </ul>
+</div>
+
+<div class="step">
+  <span class="step-number">Step 2:</span> Name the File Correctly
+  <p>Save your episode with the naming pattern:</p>
+  <div class="code-block">
+    episodes/ep7.html
+    episodes/ep8.html
+    episodes/ep9.html
+    etc.
+  </div>
+</div>
+
+<div class="step">
+  <span class="step-number">Step 3:</span> Update Episode Links
+  <p>Edit the navigation in your new episode's footer to link to adjacent episodes:</p>
+  <div class="code-block">
+&lt;!-- In the footer section --&gt;
+&lt;a href="ep6.html" ...&gt;◀ EP.6&lt;/a&gt;
+&lt;a href="ep8.html" ...&gt;EP.8 ▶&lt;/a&gt;
+  </div>
+  <p>And update the previous episode's footer to link to your new one.</p>
+</div>
+
+<div class="step">
+  <span class="step-number">Step 4:</span> Update index.html
+  <p>Add your new episode to the home page navigation. Find the episodes list and add:</p>
+  <div class="code-block">
+&lt;a href="episodes/ep7.html"&gt;
+  &lt;div class="ep-card"&gt;
+    &lt;div class="ep-number"&gt;EP.7&lt;/div&gt;
+    &lt;div class="ep-title"&gt;EPISODE TITLE HERE&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/a&gt;
+  </div>
+</div>
+
+<div class="step">
+  <span class="step-number">Step 5:</span> Push to GitHub
+  <p>Use Git to upload your new files:</p>
+  <div class="code-block">
+git add episodes/ep7.html
+git add index.html
+git commit -m "Add EP.7 - YOUR EPISODE TITLE"
+git push origin main
+  </div>
+</div>
+
+<div class="section">
+  <h2>Folder Structure</h2>
+  <p>Your repository should look like this:</p>
+  <div class="code-block">
+Princessbaby/
+├── index.html              (Home page)
+├── README.md               (Documentation)
+├── UPLOAD_GUIDE.html       (This file)
+└── episodes/
+    ├── ep1.html           (ICE ICE SHADY)
+    ├── ep2.html           (LIKE, SHARE & LIE)
+    ├── ep3.html           (PILL PUSHERS & PROFIT)
+    ├── ep4.html           (BREAKING BAD NEWS)
+    ├── ep5.html           (HOLY HUSTLE)
+    ├── ep6.html           (WORLD GONE WILD)
+    ├── ep7.html           (YOUR NEW EPISODE)
+    └── ep8.html           (FUTURE EPISODE)
+  </div>
+</div>
+
+<div class="section">
+  <h2>Episode Template Checklist</h2>
+  <p>Before uploading, make sure your episode has:</p>
+  <table>
+    <tr>
+      <th>Component</th>
+      <th>Required</th>
+      <th>Example</th>
+    </tr>
+    <tr>
+      <td>Episode Title</td>
+      <td>✅</td>
+      <td>&lt;title&gt;Baby Princess Ep.7 – TITLE&lt;/title&gt;</td>
+    </tr>
+    <tr>
+      <td>5 Scenes</td>
+      <td>✅</td>
+      <td>&lt;div class="scene" id="scene1"&gt;...&lt;/div&gt;</td>
+    </tr>
+    <tr>
+      <td>Scene Durations</td>
+      <td>✅</td>
+      <td>sceneDurations = [10000, 14000, 12000, 14000, 10000]</td>
+    </tr>
+    <tr>
+      <td>SVG Graphics</td>
+      <td>✅</td>
+      <td>Baby Princess character, props, backgrounds</td>
+    </tr>
+    <tr>
+      <td>Dialogue Bubbles</td>
+      <td>✅</td>
+      <td>&lt;div class="bubble"&gt;...&lt;/div&gt;</td>
+    </tr>
+    <tr>
+      <td>Control Buttons</td>
+      <td>✅</td>
+      <td>PREV, PAUSE/PLAY, NEXT</td>
+    </tr>
+    <tr>
+      <td>Navigation Links</td>
+      <td>✅</td>
+      <td>Home, Previous Ep, Next Ep</td>
+    </tr>
+    <tr>
+      <td>Progress Bar</td>
+      <td>✅</td>
+      <td>&lt;div class="progress-bar"&gt;</td>
+    </tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Quick Reference: Important File Paths</h2>
+  <div class="code-block">
+<!-- Link to home page from episode -->
+&lt;a href="../index.html"&gt;🏠 HOME&lt;/a&gt;
+
+<!-- Link between episodes -->
+&lt;a href="ep7.html"&gt;EP.7 ▶&lt;/a&gt;
+&lt;a href="ep6.html"&gt;◀ EP.6&lt;/a&gt;
+
+<!-- All episodes in /episodes/ folder -->
+episodes/ep1.html
+episodes/ep2.html
+etc.
+  </div>
+</div>
+
+<div class="warning">
+  <strong>⚠️ Important:</strong> Make sure all graphics, styles, and scripts are self-contained in the HTML file. Do NOT use external stylesheets or image files — everything must be inline (CSS in &lt;style&gt; tags, graphics as SVG, scripts in &lt;script&gt; tags).
+</div>
+
+<div class="success">
+  <strong>✅ Pro Tips:</strong>
+  <ul style="margin-left:20px;margin-top:10px;">
+    <li>Use consistent color schemes and styling with other episodes</li>
+    <li>Each episode should be about 60 seconds (adjust sceneDurations accordingly)</li>
+    <li>Test all links and animations before pushing to GitHub</li>
+    <li>Keep character SVGs consistent in size and style</li>
+    <li>Update README.md with new episode details</li>
+  </ul>
+</div>
+
+<div class="section" style="text-align:center;margin-top:40px;">
+  <h2>Need Help?</h2>
+  <p>Refer to existing episodes (ep1.html - ep6.html) as templates for structure and styling.</p>
+  <p style="margin-top:15px;color:#27ae60;">
+    🐾 <strong>Happy uploading!</strong> Bark at the truth, baby! 🐾
+  </p>
+</div>
+
+</body>
+</html>

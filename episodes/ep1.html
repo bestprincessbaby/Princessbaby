@@ -606,12 +606,15 @@
 </div>
 
 <script>
-const TOTAL_DURATION = 60000;
+const TOTAL_DURATION = 60000; // 60 seconds
 const scenes = ['scene1','scene2','scene3','scene4','scene5'];
 const sceneDurations = [10000, 14000, 12000, 14000, 10000];
 let currentScene = 0;
 let sceneTimer = null;
+let globalTimer = null;
+let elapsed = 0;
 let playing = true;
+let sceneElapsed = 0;
 
 function showScene(idx) {
   scenes.forEach((s,i) => {
@@ -619,6 +622,7 @@ function showScene(idx) {
   });
   document.getElementById('sceneCounter').textContent = `Scene ${idx+1} / ${scenes.length}`;
   currentScene = idx;
+  sceneElapsed = 0;
   runSceneAnimations(idx);
 }
 
@@ -628,7 +632,10 @@ function showBubble(id, delay=0) {
     if(el) el.classList.add('show');
   }, delay);
 }
-
+function hideBubble(id) {
+  const el = document.getElementById(id);
+  if(el) el.classList.remove('show');
+}
 function showNarrator(id, delay=0) {
   setTimeout(() => {
     const el = document.getElementById(id);
@@ -637,11 +644,13 @@ function showNarrator(id, delay=0) {
 }
 
 function runSceneAnimations(idx) {
+  // Clear all bubbles
   document.querySelectorAll('.bubble,.narrator').forEach(el => el.classList.remove('show'));
 
   if(idx === 0) {
     showNarrator('n1_1', 500);
     showBubble('b1_1', 2000);
+    // Animate BP walking
     setTimeout(() => {
       const bp = document.getElementById('bp1');
       if(bp) { bp.style.left = '200px'; }
@@ -661,10 +670,12 @@ function runSceneAnimations(idx) {
     setTimeout(() => {
       const waves = document.getElementById('barkWaves');
       if(waves) waves.style.opacity = '1';
+      // Shrink agents
       const a3 = document.getElementById('agent3');
       const a4 = document.getElementById('agent4');
       if(a3) a3.classList.add('shrinking');
       if(a4) { setTimeout(() => a4.classList.add('shrinking'), 400); }
+      // Show money
       ['money1','money2','money3'].forEach((m,i) => {
         setTimeout(() => {
           const el = document.getElementById(m);
@@ -674,7 +685,10 @@ function runSceneAnimations(idx) {
     }, 1500);
   }
   else if(idx === 4) {
-    setTimeout(() => { addSparkles(); }, 500);
+    // Sparkle tiara
+    setTimeout(() => {
+      addSparkles();
+    }, 500);
   }
 }
 
@@ -728,6 +742,7 @@ function togglePlay() {
   else clearTimeout(sceneTimer);
 }
 
+// Progress bar
 let startTime = Date.now();
 function updateProgress() {
   if(!playing) return;
@@ -740,6 +755,7 @@ function updateProgress() {
   if(pct < 100) requestAnimationFrame(updateProgress);
 }
 
+// Start
 showScene(0);
 scheduleNext();
 requestAnimationFrame(updateProgress);

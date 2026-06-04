@@ -4,9 +4,505 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Baby Princess Ep.6 – WORLD GONE WILD</title>
-<!-- Content truncated - full version available upon request -->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#111; font-family:'Comic Neue',cursive; overflow:hidden; width:100vw; height:100vh; }
+  #stage { width:800px; height:500px; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); overflow:hidden; border:4px solid #27ae60; border-radius:8px; }
+  .scene { position:absolute; width:100%; height:100%; display:none; }
+  .scene.active { display:block; }
+  .un-bg { background:linear-gradient(180deg,#1a2a4a 0%,#0d1a2e 60%,#0a1020 100%); }
+  .puppet-bg { background:linear-gradient(135deg,#1a1a1a 0%,#2a2a2a 100%); }
+  .podium-bg { background:linear-gradient(180deg,#0a1a2e 0%,#051020 100%); }
+  .slide-bg { background:linear-gradient(135deg,#0a2a0a 0%,#1a4a1a 100%); }
+  .end-bg { background:radial-gradient(circle,#0a2a0a,#051005); }
+  .ep-header { position:absolute; top:0; left:0; right:0; background:rgba(0,0,0,0.8); padding:6px 14px; display:flex; justify-content:space-between; align-items:center; z-index:100; }
+  .ep-label { font-family:'Bangers',cursive; color:#27ae60; font-size:1em; }
+  .ep-title-bar { font-family:'Bangers',cursive; color:#FFD700; font-size:1.1em; letter-spacing:2px; }
+  .ep-timer { font-family:'Bangers',cursive; color:#fff; font-size:1em; }
+  .progress-bar { position:absolute; bottom:0; left:0; height:5px; background:#27ae60; z-index:100; }
+  .bubble { position:absolute; background:#fff; border:3px solid #000; border-radius:16px; padding:8px 14px; font-family:'Comic Neue',cursive; font-weight:700; font-size:0.85em; max-width:220px; line-height:1.35; z-index:50; opacity:0; transition:opacity 0.4s; pointer-events:none; }
+  .bubble.show { opacity:1; }
+  .bubble::after { content:''; position:absolute; bottom:-14px; left:20px; border:7px solid transparent; border-top-color:#000; }
+  .bubble.right::after { left:auto; right:20px; }
+  @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
+  @keyframes glowPulse { 0%,100%{text-shadow:0 0 10px #27ae60,3px 3px 0 #000;} 50%{text-shadow:0 0 30px #27ae60,0 0 60px #FFD700,3px 3px 0 #000;} }
+  .glow-text { animation:glowPulse 1.5s infinite; }
+  @keyframes sparklePop { 0%{opacity:1;transform:scale(0.5);} 50%{opacity:1;transform:scale(1.5);} 100%{opacity:0;transform:scale(2);} }
+  @keyframes wigFall { 0%{transform:translateY(0) rotate(0deg);opacity:1;} 100%{transform:translateY(60px) rotate(45deg);opacity:0;} }
+  .wig-fall { animation:wigFall 1s forwards; }
+  @keyframes sweat { 0%{opacity:0;transform:translateY(0);} 100%{opacity:1;transform:translateY(20px);} }
+  .controls { position:absolute; bottom:12px; right:14px; z-index:100; display:flex; gap:8px; }
+  .ctrl-btn { background:rgba(0,0,0,0.7); color:#FFD700; border:2px solid #FFD700; border-radius:6px; padding:4px 12px; font-family:'Bangers',cursive; font-size:0.9em; cursor:pointer; }
+  .ctrl-btn:hover { background:#FFD700; color:#000; }
+  .scene-counter { position:absolute; bottom:12px; left:14px; z-index:100; font-family:'Bangers',cursive; color:#aaa; font-size:0.85em; }
+  @keyframes firework { 0%{transform:scale(0);opacity:1;} 100%{transform:scale(3);opacity:0;} }
+  .firework { position:absolute; animation:firework 1s ease-out forwards; font-size:2em; }
+  /* Slide bullet */
+  .slide-bullet { background:rgba(255,255,255,0.1); border:2px solid #27ae60; border-radius:6px; padding:8px 14px; margin:6px 0; font-family:'Comic Neue',cursive; font-weight:700; color:#fff; font-size:0.85em; opacity:0; transition:opacity 0.4s; }
+  .slide-bullet.show { opacity:1; }
+</style>
 </head>
 <body>
-<p>Episode 6: WORLD GONE WILD - Full interactive episode content goes here</p>
+<div id="stage">
+  <div class="ep-header">
+    <span class="ep-label">BABY PRINCESS</span>
+    <span class="ep-title-bar">EP.6 — WORLD GONE WILD</span>
+    <span class="ep-timer" id="timer">0:00</span>
+  </div>
+  <div class="progress-bar" id="progressBar" style="width:0%"></div>
+
+  <!-- SCENE 1: United Nations hall -->
+  <div class="scene un-bg active" id="scene1">
+    <!-- UN hall -->
+    <div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:#0a1020;"></div>
+    <!-- Flags row -->
+    <div style="position:absolute;top:40px;left:0;right:0;height:30px;display:flex;justify-content:center;gap:5px;align-items:center;">
+      <span style="font-size:1.2em;">🇺🇸</span><span style="font-size:1.2em;">🇬🇧</span><span style="font-size:1.2em;">🇨🇳</span><span style="font-size:1.2em;">🇷🇺</span><span style="font-size:1.2em;">🇫🇷</span><span style="font-size:1.2em;">🇩🇪</span><span style="font-size:1.2em;">🇯🇵</span><span style="font-size:1.2em;">🇧🇷</span><span style="font-size:1.2em;">🇮🇳</span><span style="font-size:1.2em;">🇨🇦</span>
+    </div>
+    <!-- UN sign -->
+    <div style="position:absolute;top:75px;left:50%;transform:translateX(-50%);font-family:'Bangers',cursive;color:#87CEEB;font-size:1.3em;letter-spacing:3px;text-shadow:2px 2px 0 #000;">🌐 UNITED NATIONS</div>
+
+    <!-- World leaders on phones (row of figures) -->
+    <div style="position:absolute;bottom:80px;left:0;right:0;display:flex;justify-content:space-around;align-items:flex-end;padding:0 20px;">
+      <!-- Leader 1 -->
+      <div style="text-align:center;">
+        <svg width="50" height="80" viewBox="0 0 50 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="35" width="30" height="40" rx="4" fill="#1a3a5c"/>
+          <circle cx="25" cy="22" r="15" fill="#f4c2a1"/>
+          <ellipse cx="25" cy="9" rx="15" ry="7" fill="#333"/>
+          <circle cx="19" cy="20" r="3" fill="#fff"/><circle cx="31" cy="20" r="3" fill="#fff"/>
+          <circle cx="20" cy="20" r="1.5" fill="#333"/><circle cx="32" cy="20" r="1.5" fill="#333"/>
+          <!-- Phone -->
+          <rect x="30" y="40" width="10" height="16" rx="2" fill="#222" stroke="#555" stroke-width="0.5"/>
+          <rect x="31" y="42" width="8" height="10" rx="1" fill="#87CEEB"/>
+        </svg>
+        <div style="font-size:0.5em;color:#aaa;font-family:'Bangers',cursive;">USA</div>
+      </div>
+      <!-- Leader 2 -->
+      <div style="text-align:center;">
+        <svg width="50" height="80" viewBox="0 0 50 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="35" width="30" height="40" rx="4" fill="#8B0000"/>
+          <circle cx="25" cy="22" r="15" fill="#d4a574"/>
+          <ellipse cx="25" cy="9" rx="15" ry="7" fill="#555"/>
+          <circle cx="19" cy="20" r="3" fill="#fff"/><circle cx="31" cy="20" r="3" fill="#fff"/>
+          <circle cx="20" cy="20" r="1.5" fill="#333"/><circle cx="32" cy="20" r="1.5" fill="#333"/>
+          <rect x="10" y="40" width="10" height="16" rx="2" fill="#222" stroke="#555" stroke-width="0.5"/>
+          <rect x="11" y="42" width="8" height="10" rx="1" fill="#87CEEB"/>
+        </svg>
+        <div style="font-size:0.5em;color:#aaa;font-family:'Bangers',cursive;">UK</div>
+      </div>
+      <!-- Leader 3 -->
+      <div style="text-align:center;">
+        <svg width="50" height="80" viewBox="0 0 50 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="35" width="30" height="40" rx="4" fill="#cc0000"/>
+          <circle cx="25" cy="22" r="15" fill="#f4c2a1"/>
+          <ellipse cx="25" cy="9" rx="15" ry="7" fill="#000"/>
+          <circle cx="19" cy="20" r="3" fill="#fff"/><circle cx="31" cy="20" r="3" fill="#fff"/>
+          <circle cx="20" cy="20" r="1.5" fill="#333"/><circle cx="32" cy="20" r="1.5" fill="#333"/>
+          <rect x="30" y="40" width="10" height="16" rx="2" fill="#222" stroke="#555" stroke-width="0.5"/>
+          <rect x="31" y="42" width="8" height="10" rx="1" fill="#87CEEB"/>
+        </svg>
+        <div style="font-size:0.5em;color:#aaa;font-family:'Bangers',cursive;">CHINA</div>
+      </div>
+      <!-- Leader 4 -->
+      <div style="text-align:center;">
+        <svg width="50" height="80" viewBox="0 0 50 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="35" width="30" height="40" rx="4" fill="#006400"/>
+          <circle cx="25" cy="22" r="15" fill="#c8a060"/>
+          <ellipse cx="25" cy="9" rx="15" ry="7" fill="#444"/>
+          <circle cx="19" cy="20" r="3" fill="#fff"/><circle cx="31" cy="20" r="3" fill="#fff"/>
+          <circle cx="20" cy="20" r="1.5" fill="#333"/><circle cx="32" cy="20" r="1.5" fill="#333"/>
+          <rect x="10" y="40" width="10" height="16" rx="2" fill="#222" stroke="#555" stroke-width="0.5"/>
+          <rect x="11" y="42" width="8" height="10" rx="1" fill="#87CEEB"/>
+        </svg>
+        <div style="font-size:0.5em;color:#aaa;font-family:'Bangers',cursive;">BRAZIL</div>
+      </div>
+      <!-- Leader 5 -->
+      <div style="text-align:center;">
+        <svg width="50" height="80" viewBox="0 0 50 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="35" width="30" height="40" rx="4" fill="#00008B"/>
+          <circle cx="25" cy="22" r="15" fill="#f4c2a1"/>
+          <ellipse cx="25" cy="9" rx="15" ry="7" fill="#888"/>
+          <circle cx="19" cy="20" r="3" fill="#fff"/><circle cx="31" cy="20" r="3" fill="#fff"/>
+          <circle cx="20" cy="20" r="1.5" fill="#333"/><circle cx="32" cy="20" r="1.5" fill="#333"/>
+          <rect x="30" y="40" width="10" height="16" rx="2" fill="#222" stroke="#555" stroke-width="0.5"/>
+          <rect x="31" y="42" width="8" height="10" rx="1" fill="#87CEEB"/>
+        </svg>
+        <div style="font-size:0.5em;color:#aaa;font-family:'Bangers',cursive;">FRANCE</div>
+      </div>
+    </div>
+
+    <!-- Baby Princess entering -->
+    <div style="position:absolute;bottom:80px;left:30px;">
+      <svg width="70" height="90" viewBox="0 0 90 110" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="45" cy="85" rx="28" ry="22" fill="#1a1a1a"/>
+        <ellipse cx="45" cy="90" rx="16" ry="18" fill="#f5f5f0"/>
+        <!-- Green military dress -->
+        <ellipse cx="45" cy="98" rx="30" ry="18" fill="#1a5c1a"/>
+        <ellipse cx="45" cy="104" rx="34" ry="14" fill="#27ae60"/>
+        <!-- Gold trim/buttons -->
+        <circle cx="45" cy="92" r="2" fill="#FFD700"/>
+        <circle cx="45" cy="98" r="2" fill="#FFD700"/>
+        <circle cx="45" cy="104" r="2" fill="#FFD700"/>
+        <!-- Epaulettes -->
+        <rect x="28" y="84" width="12" height="5" rx="2" fill="#FFD700"/>
+        <rect x="50" y="84" width="12" height="5" rx="2" fill="#FFD700"/>
+        <ellipse cx="45" cy="50" rx="26" ry="24" fill="#1a1a1a"/>
+        <ellipse cx="45" cy="57" rx="16" ry="15" fill="#e8e0d0"/>
+        <ellipse cx="33" cy="42" rx="6" ry="5" fill="#c8a060"/>
+        <ellipse cx="57" cy="42" rx="6" ry="5" fill="#c8a060"/>
+        <polygon points="20,44 12,8 38,36" fill="#1a1a1a"/>
+        <polygon points="70,44 78,8 52,36" fill="#1a1a1a"/>
+        <polygon points="22,40 15,14 36,34" fill="#8B4040" opacity="0.7"/>
+        <polygon points="68,40 75,14 54,34" fill="#8B4040" opacity="0.7"/>
+        <circle cx="37" cy="51" r="5" fill="#111"/>
+        <circle cx="53" cy="51" r="5" fill="#111"/>
+        <circle cx="38.5" cy="49.5" r="1.8" fill="#fff"/>
+        <circle cx="54.5" cy="49.5" r="1.8" fill="#fff"/>
+        <ellipse cx="45" cy="60" rx="4" ry="3" fill="#111"/>
+        <line x1="40" y1="66" x2="50" y2="66" stroke="#555" stroke-width="2"/>
+        <rect x="30" y="28" width="30" height="5" rx="2" fill="#FFD700"/>
+        <polygon points="36,28 38,20 40,28" fill="#FFD700"/>
+        <polygon points="43,28 45,16 47,28" fill="#FFD700"/>
+        <polygon points="50,28 52,20 54,28" fill="#FFD700"/>
+        <circle cx="45" cy="19" r="3" fill="#ff69b4"/>
+        <text x="18" y="20" font-size="10" fill="#FFD700">✦</text>
+        <text x="66" y="20" font-size="10" fill="#FFD700">✦</text>
+        <path d="M28,76 Q45,70 62,76" stroke="#ff69b4" stroke-width="4" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="bubble" id="b1_1" style="left:110px;bottom:200px;max-width:220px;">Is anyone actually... governing? 🌍🤔</div>
+  </div>
+
+  <!-- SCENE 2: Puppets revealed -->
+  <div class="scene puppet-bg" id="scene2">
+    <!-- Giant shadow hand at top -->
+    <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:4em;opacity:0.6;">🤲</div>
+    <div style="position:absolute;top:30px;left:50%;transform:translateX(-50%);font-family:'Bangers',cursive;color:#cc0000;font-size:0.9em;letter-spacing:2px;text-shadow:2px 2px 0 #000;">MONEY</div>
+
+    <!-- Puppet strings from top -->
+    <svg style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;" viewBox="0 0 800 500">
+      <line x1="200" y1="60" x2="200" y2="280" stroke="#888" stroke-width="1.5" stroke-dasharray="5,4"/>
+      <line x1="350" y1="60" x2="350" y2="280" stroke="#888" stroke-width="1.5" stroke-dasharray="5,4"/>
+      <line x1="500" y1="60" x2="500" y2="280" stroke="#888" stroke-width="1.5" stroke-dasharray="5,4"/>
+      <line x1="650" y1="60" x2="650" y2="280" stroke="#888" stroke-width="1.5" stroke-dasharray="5,4"/>
+    </svg>
+
+    <!-- Puppet leaders -->
+    <div style="position:absolute;bottom:80px;left:0;right:0;display:flex;justify-content:space-around;padding:0 40px;">
+      <div style="text-align:center;">
+        <svg width="60" height="100" viewBox="0 0 60 100" xmlns="http://www.w3.org/2000/svg">
+          <rect x="12" y="45" width="36" height="50" rx="4" fill="#1a3a5c"/>
+          <circle cx="30" cy="28" r="18" fill="#f4c2a1"/>
+          <ellipse cx="30" cy="12" rx="18" ry="9" fill="#333"/>
+          <circle cx="22" cy="26" r="4" fill="#fff"/><circle cx="38" cy="26" r="4" fill="#fff"/>
+          <circle cx="23" cy="26" r="2" fill="#333"/><circle cx="39" cy="26" r="2" fill="#333"/>
+          <path d="M22,36 Q30,42 38,36" stroke="#555" stroke-width="1.5" fill="none"/>
+        </svg>
+        <div style="font-family:'Bangers',cursive;color:#ff4444;font-size:0.65em;">I VOTE YES<br>ON THE WAR!</div>
+      </div>
+      <div style="text-align:center;">
+        <svg width="60" height="100" viewBox="0 0 60 100" xmlns="http://www.w3.org/2000/svg">
+          <rect x="12" y="45" width="36" height="50" rx="4" fill="#8B0000"/>
+          <circle cx="30" cy="28" r="18" fill="#d4a574"/>
+          <ellipse cx="30" cy="12" rx="18" ry="9" fill="#555"/>
+          <circle cx="22" cy="26" r="4" fill="#fff"/><circle cx="38" cy="26" r="4" fill="#fff"/>
+          <circle cx="23" cy="26" r="2" fill="#333"/><circle cx="39" cy="26" r="2" fill="#333"/>
+          <path d="M22,36 Q30,42 38,36" stroke="#555" stroke-width="1.5" fill="none"/>
+        </svg>
+        <div style="font-family:'Bangers',cursive;color:#ff4444;font-size:0.65em;">I VOTE YES<br>ON POVERTY!</div>
+      </div>
+      <div style="text-align:center;">
+        <svg width="60" height="100" viewBox="0 0 60 100" xmlns="http://www.w3.org/2000/svg">
+          <rect x="12" y="45" width="36" height="50" rx="4" fill="#cc0000"/>
+          <circle cx="30" cy="28" r="18" fill="#f4c2a1"/>
+          <ellipse cx="30" cy="12" rx="18" ry="9" fill="#000"/>
+          <circle cx="22" cy="26" r="4" fill="#fff"/><circle cx="38" cy="26" r="4" fill="#fff"/>
+          <circle cx="23" cy="26" r="2" fill="#333"/><circle cx="39" cy="26" r="2" fill="#333"/>
+          <path d="M22,36 Q30,42 38,36" stroke="#555" stroke-width="1.5" fill="none"/>
+        </svg>
+        <div style="font-family:'Bangers',cursive;color:#ff4444;font-size:0.65em;">I VOTE YES<br>ON DONORS!</div>
+      </div>
+      <div style="text-align:center;">
+        <svg width="60" height="100" viewBox="0 0 60 100" xmlns="http://www.w3.org/2000/svg">
+          <rect x="12" y="45" width="36" height="50" rx="4" fill="#006400"/>
+          <circle cx="30" cy="28" r="18" fill="#c8a060"/>
+          <ellipse cx="30" cy="12" rx="18" ry="9" fill="#444"/>
+          <circle cx="22" cy="26" r="4" fill="#fff"/><circle cx="38" cy="26" r="4" fill="#fff"/>
+          <circle cx="23" cy="26" r="2" fill="#333"/><circle cx="39" cy="26" r="2" fill="#333"/>
+          <path d="M22,36 Q30,42 38,36" stroke="#555" stroke-width="1.5" fill="none"/>
+        </svg>
+        <div style="font-family:'Bangers',cursive;color:#ff4444;font-size:0.65em;">I VOTE YES<br>ON CORRUPTION!</div>
+      </div>
+    </div>
+
+    <!-- Baby Princess -->
+    <div style="position:absolute;bottom:80px;left:30px;">
+      <svg width="70" height="90" viewBox="0 0 90 110" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="45" cy="85" rx="28" ry="22" fill="#1a1a1a"/>
+        <ellipse cx="45" cy="90" rx="16" ry="18" fill="#f5f5f0"/>
+        <ellipse cx="45" cy="98" rx="30" ry="18" fill="#1a5c1a"/>
+        <ellipse cx="45" cy="104" rx="34" ry="14" fill="#27ae60"/>
+        <circle cx="45" cy="92" r="2" fill="#FFD700"/>
+        <circle cx="45" cy="98" r="2" fill="#FFD700"/>
+        <rect x="28" y="84" width="12" height="5" rx="2" fill="#FFD700"/>
+        <rect x="50" y="84" width="12" height="5" rx="2" fill="#FFD700"/>
+        <ellipse cx="45" cy="50" rx="26" ry="24" fill="#1a1a1a"/>
+        <ellipse cx="45" cy="57" rx="16" ry="15" fill="#e8e0d0"/>
+        <ellipse cx="33" cy="42" rx="6" ry="5" fill="#c8a060"/>
+        <ellipse cx="57" cy="42" rx="6" ry="5" fill="#c8a060"/>
+        <polygon points="20,44 12,8 38,36" fill="#1a1a1a"/>
+        <polygon points="70,44 78,8 52,36" fill="#1a1a1a"/>
+        <polygon points="22,40 15,14 36,34" fill="#8B4040" opacity="0.7"/>
+        <polygon points="68,40 75,14 54,34" fill="#8B4040" opacity="0.7"/>
+        <circle cx="37" cy="51" r="5" fill="#111"/>
+        <circle cx="53" cy="51" r="5" fill="#111"/>
+        <circle cx="38.5" cy="49.5" r="1.8" fill="#fff"/>
+        <circle cx="54.5" cy="49.5" r="1.8" fill="#fff"/>
+        <ellipse cx="45" cy="60" rx="4" ry="3" fill="#111"/>
+        <line x1="40" y1="66" x2="50" y2="66" stroke="#555" stroke-width="2"/>
+        <rect x="30" y="28" width="30" height="5" rx="2" fill="#FFD700"/>
+        <polygon points="36,28 38,20 40,28" fill="#FFD700"/>
+        <polygon points="43,28 45,16 47,28" fill="#FFD700"/>
+        <polygon points="50,28 52,20 54,28" fill="#FFD700"/>
+        <circle cx="45" cy="19" r="3" fill="#ff69b4"/>
+        <text x="18" y="20" font-size="10" fill="#FFD700">✦</text>
+        <text x="66" y="20" font-size="10" fill="#FFD700">✦</text>
+        <path d="M28,76 Q45,70 62,76" stroke="#ff69b4" stroke-width="4" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="bubble" id="b2_1" style="left:110px;bottom:200px;max-width:240px;">You're all voting yes on the same thing — your donors. 🤨</div>
+  </div>
+
+  <!-- SCENE 3: Baby Princess at UN podium -->
+  <div class="scene podium-bg" id="scene3">
+    <!-- UN podium -->
+    <div style="position:absolute;bottom:80px;left:50%;transform:translateX(-50%);width:160px;height:100px;background:#1a3a5c;border:3px solid #87CEEB;border-radius:6px 6px 0 0;">
+      <div style="position:absolute;top:10px;left:50%;transform:translateX(-50%);font-size:1.5em;">🌐</div>
+      <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-family:'Bangers',cursive;color:#87CEEB;font-size:0.7em;letter-spacing:1px;white-space:nowrap;">UNITED NATIONS</div>
+    </div>
+    <div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:#051020;"></div>
+
+    <!-- Baby Princess at podium (on top) -->
+    <div style="position:absolute;bottom:178px;left:50%;transform:translateX(-50%);">
+      <svg width="100" height="120" viewBox="0 0 90 110" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="45" cy="85" rx="28" ry="22" fill="#1a1a1a"/>
+        <ellipse cx="45" cy="90" rx="16" ry="18" fill="#f5f5f0"/>
+        <ellipse cx="45" cy="98" rx="30" ry="18" fill="#1a5c1a"/>
+        <ellipse cx="45" cy="104" rx="34" ry="14" fill="#27ae60"/>
+        <circle cx="45" cy="92" r="2" fill="#FFD700"/>
+        <circle cx="45" cy="98" r="2" fill="#FFD700"/>
+        <rect x="28" y="84" width="12" height="5" rx="2" fill="#FFD700"/>
+        <rect x="50" y="84" width="12" height="5" rx="2" fill="#FFD700"/>
+        <ellipse cx="45" cy="50" rx="26" ry="24" fill="#1a1a1a"/>
+        <ellipse cx="45" cy="57" rx="16" ry="15" fill="#e8e0d0"/>
+        <ellipse cx="33" cy="42" rx="6" ry="5" fill="#c8a060"/>
+        <ellipse cx="57" cy="42" rx="6" ry="5" fill="#c8a060"/>
+        <polygon points="20,44 12,8 38,36" fill="#1a1a1a"/>
+        <polygon points="70,44 78,8 52,36" fill="#1a1a1a"/>
+        <polygon points="22,40 15,14 36,34" fill="#8B4040" opacity="0.7"/>
+        <polygon points="68,40 75,14 54,34" fill="#8B4040" opacity="0.7"/>
+        <circle cx="37" cy="51" r="5" fill="#111"/>
+        <circle cx="53" cy="51" r="5" fill="#111"/>
+        <circle cx="38.5" cy="49.5" r="1.8" fill="#fff"/>
+        <circle cx="54.5" cy="49.5" r="1.8" fill="#fff"/>
+        <ellipse cx="45" cy="60" rx="4" ry="3" fill="#111"/>
+        <!-- Open barking mouth -->
+        <ellipse cx="45" cy="65" rx="5" ry="4" fill="#cc4444"/>
+        <rect x="30" y="28" width="30" height="5" rx="2" fill="#FFD700"/>
+        <polygon points="36,28 38,20 40,28" fill="#FFD700"/>
+        <polygon points="43,28 45,16 47,28" fill="#FFD700"/>
+        <polygon points="50,28 52,20 54,28" fill="#FFD700"/>
+        <circle cx="45" cy="19" r="3" fill="#ff69b4"/>
+        <circle cx="37" cy="23" r="2" fill="#00bfff"/>
+        <circle cx="53" cy="23" r="2" fill="#ff4444"/>
+        <text x="18" y="20" font-size="10" fill="#FFD700">✦</text>
+        <text x="66" y="20" font-size="10" fill="#FFD700">✦</text>
+        <text x="40" y="8" font-size="8" fill="#fff">✦</text>
+        <path d="M28,76 Q45,70 62,76" stroke="#ff69b4" stroke-width="4" fill="none"/>
+      </svg>
+    </div>
+
+    <!-- Gasping crowd -->
+    <div style="position:absolute;bottom:80px;right:40px;font-size:1.5em;letter-spacing:3px;">😱😱😱😱</div>
+    <div style="position:absolute;bottom:110px;right:60px;font-size:1.2em;letter-spacing:3px;">😮😮😮</div>
+
+    <div class="bubble" id="b3_1" style="left:50%;bottom:320px;transform:translateX(-50%);max-width:320px;text-align:center;font-size:0.9em;">Corruption isn't a glitch in the system. It IS the system. And I'm 8 pounds of DONE with it. 🐾</div>
+  </div>
+
+  <!-- SCENE 4: Transparency slides -->
+  <div class="scene slide-bg" id="scene4">
+    <!-- Presentation screen -->
+    <div style="position:absolute;top:50px;left:80px;right:80px;bottom:100px;background:#fff;border:4px solid #27ae60;border-radius:6px;padding:20px;">
+      <div style="font-family:'Bangers',cursive;font-size:1.4em;color:#27ae60;text-align:center;margin-bottom:15px;letter-spacing:2px;">📋 BABY PRINCESS'S DEMANDS</div>
+      <div class="slide-bullet" id="sb1">💰 Show us the money — all of it</div>
+      <div class="slide-bullet" id="sb2">🗳️ Show us the votes — who bought them</div>
+      <div class="slide-bullet" id="sb3">🔗 Show us who owns you — every donor</div>
+      <div class="slide-bullet" id="sb4">📢 Radical transparency — or radical accountability</div>
+    </div>
+
+    <!-- Sweating leaders in corner -->
+    <div style="position:absolute;bottom:10px;right:40px;font-size:1.8em;letter-spacing:3px;" id="sweatingLeaders">😰😰😰</div>
+    <div style="position:absolute;bottom:40px;right:50px;font-size:0.7em;font-family:'Bangers',cursive;color:#cc0000;" id="wigText"></div>
+
+    <!-- Baby Princess pointing -->
+    <div style="position:absolute;bottom:10px;left:30px;">
+      <svg width="70" height="90" viewBox="0 0 90 110" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="45" cy="85" rx="28" ry="22" fill="#1a1a1a"/>
+        <ellipse cx="45" cy="90" rx="16" ry="18" fill="#f5f5f0"/>
+        <ellipse cx="45" cy="98" rx="30" ry="18" fill="#1a5c1a"/>
+        <ellipse cx="45" cy="104" rx="34" ry="14" fill="#27ae60"/>
+        <circle cx="45" cy="92" r="2" fill="#FFD700"/>
+        <rect x="28" y="84" width="12" height="5" rx="2" fill="#FFD700"/>
+        <rect x="50" y="84" width="12" height="5" rx="2" fill="#FFD700"/>
+        <ellipse cx="45" cy="50" rx="26" ry="24" fill="#1a1a1a"/>
+        <ellipse cx="45" cy="57" rx="16" ry="15" fill="#e8e0d0"/>
+        <ellipse cx="33" cy="42" rx="6" ry="5" fill="#c8a060"/>
+        <ellipse cx="57" cy="42" rx="6" ry="5" fill="#c8a060"/>
+        <polygon points="20,44 12,8 38,36" fill="#1a1a1a"/>
+        <polygon points="70,44 78,8 52,36" fill="#1a1a1a"/>
+        <polygon points="22,40 15,14 36,34" fill="#8B4040" opacity="0.7"/>
+        <polygon points="68,40 75,14 54,34" fill="#8B4040" opacity="0.7"/>
+        <circle cx="37" cy="51" r="5" fill="#111"/>
+        <circle cx="53" cy="51" r="5" fill="#111"/>
+        <circle cx="38.5" cy="49.5" r="1.8" fill="#fff"/>
+        <circle cx="54.5" cy="49.5" r="1.8" fill="#fff"/>
+        <ellipse cx="45" cy="60" rx="4" ry="3" fill="#111"/>
+        <rect x="30" y="28" width="30" height="5" rx="2" fill="#FFD700"/>
+        <polygon points="36,28 38,20 40,28" fill="#FFD700"/>
+        <polygon points="43,28 45,16 47,28" fill="#FFD700"/>
+        <polygon points="50,28 52,20 54,28" fill="#FFD700"/>
+        <circle cx="45" cy="19" r="3" fill="#ff69b4"/>
+        <text x="18" y="20" font-size="10" fill="#FFD700">✦</text>
+        <text x="66" y="20" font-size="10" fill="#FFD700">✦</text>
+        <path d="M28,76 Q45,70 62,76" stroke="#ff69b4" stroke-width="4" fill="none"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- SCENE 5: End card with fireworks -->
+  <div class="scene end-bg" id="scene5">
+    <div id="fireworks"></div>
+
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);">
+      <svg width="130" height="155" viewBox="0 0 90 110" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="45" cy="85" rx="28" ry="22" fill="#1a1a1a"/>
+        <ellipse cx="45" cy="90" rx="16" ry="18" fill="#f5f5f0"/>
+        <ellipse cx="45" cy="98" rx="30" ry="18" fill="#1a5c1a"/>
+        <ellipse cx="45" cy="104" rx="34" ry="14" fill="#27ae60"/>
+        <circle cx="45" cy="92" r="2" fill="#FFD700"/>
+        <circle cx="45" cy="98" r="2" fill="#FFD700"/>
+        <rect x="28" y="84" width="12" height="5" rx="2" fill="#FFD700"/>
+        <rect x="50" y="84" width="12" height="5" rx="2" fill="#FFD700"/>
+        <ellipse cx="45" cy="50" rx="26" ry="24" fill="#1a1a1a"/>
+        <ellipse cx="45" cy="57" rx="16" ry="15" fill="#e8e0d0"/>
+        <ellipse cx="33" cy="42" rx="6" ry="5" fill="#c8a060"/>
+        <ellipse cx="57" cy="42" rx="6" ry="5" fill="#c8a060"/>
+        <polygon points="20,44 12,8 38,36" fill="#1a1a1a"/>
+        <polygon points="70,44 78,8 52,36" fill="#1a1a1a"/>
+        <polygon points="22,40 15,14 36,34" fill="#8B4040" opacity="0.7"/>
+        <polygon points="68,40 75,14 54,34" fill="#8B4040" opacity="0.7"/>
+        <circle cx="37" cy="51" r="5" fill="#111"/>
+        <circle cx="53" cy="51" r="5" fill="#111"/>
+        <circle cx="38.5" cy="49.5" r="1.8" fill="#fff"/>
+        <circle cx="54.5" cy="49.5" r="1.8" fill="#fff"/>
+        <ellipse cx="45" cy="60" rx="4" ry="3" fill="#111"/>
+        <path d="M40,65 Q45,70 50,65" stroke="#555" stroke-width="1.5" fill="none"/>
+        <rect x="30" y="28" width="30" height="5" rx="2" fill="#FFD700"/>
+        <polygon points="36,28 38,20 40,28" fill="#FFD700"/>
+        <polygon points="43,28 45,16 47,28" fill="#FFD700"/>
+        <polygon points="50,28 52,20 54,28" fill="#FFD700"/>
+        <circle cx="45" cy="19" r="3" fill="#ff69b4"/>
+        <circle cx="37" cy="23" r="2" fill="#00bfff"/>
+        <circle cx="53" cy="23" r="2" fill="#ff4444"/>
+        <text x="14" y="18" font-size="12" fill="#FFD700">✦</text>
+        <text x="64" y="18" font-size="12" fill="#FFD700">✦</text>
+        <text x="38" y="6" font-size="10" fill="#fff">✦</text>
+        <path d="M28,76 Q45,70 62,76" stroke="#ff69b4" stroke-width="4" fill="none"/>
+      </svg>
+    </div>
+
+    <div style="position:absolute;bottom:120px;left:50%;transform:translateX(-50%);width:90%;text-align:center;">
+      <div style="font-family:'Comic Neue',cursive;font-weight:700;color:#fff;font-size:0.9em;line-height:1.5;background:rgba(0,0,0,0.6);padding:12px 20px;border-radius:10px;border:2px solid #27ae60;max-width:520px;margin:0 auto;">
+        "The world doesn't need more politicians. It needs more accountability."
+      </div>
+    </div>
+    <div style="position:absolute;bottom:60px;left:50%;transform:translateX(-50%);white-space:nowrap;">
+      <span style="font-family:'Bangers',cursive;font-size:1.8em;color:#FFD700;text-shadow:2px 2px 0 #000;" class="glow-text">🐾 Bark at the truth, baby! 🐾</span>
+    </div>
+
+    <!-- Next week teaser -->
+    <div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-family:'Bangers',cursive;color:#27ae60;font-size:0.9em;letter-spacing:1px;text-shadow:1px 1px 0 #000;">
+      📺 MORE EPISODES COMING NEXT WEEK! 🐾
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="ctrl-btn" onclick="prevScene()">◀ PREV</button>
+    <button class="ctrl-btn" onclick="togglePlay()" id="playBtn">⏸ PAUSE</button>
+    <button class="ctrl-btn" onclick="nextScene()">NEXT ▶</button>
+  </div>
+  <div class="scene-counter" id="sceneCounter">Scene 1 / 5</div>
+</div>
+
+<script>
+const scenes=['scene1','scene2','scene3','scene4','scene5'];
+const sceneDurations=[10000,14000,12000,14000,10000];
+let currentScene=0,sceneTimer=null,playing=true,startTime=Date.now();
+function showScene(idx){
+  scenes.forEach((s,i)=>document.getElementById(s).classList.toggle('active',i===idx));
+  document.getElementById('sceneCounter').textContent=`Scene ${idx+1} / ${scenes.length}`;
+  currentScene=idx;
+  document.querySelectorAll('.bubble,.narrator,.slide-bullet').forEach(el=>el.classList.remove('show'));
+  runSceneAnimations(idx);
+}
+function showEl(id,delay=0){setTimeout(()=>{const el=document.getElementById(id);if(el)el.classList.add('show');},delay);}
+function runSceneAnimations(idx){
+  if(idx===0){showEl('b1_1',2000);}
+  else if(idx===1){showEl('b2_1',2000);}
+  else if(idx===2){showEl('b3_1',1500);}
+  else if(idx===3){
+    showEl('sb1',500);showEl('sb2',1500);showEl('sb3',2500);showEl('sb4',3500);
+    setTimeout(()=>{
+      const wt=document.getElementById('wigText');
+      if(wt) wt.textContent='WIGS FALLING OFF...';
+    },6000);
+  }
+  else if(idx===4){
+    // Fireworks
+    const fw=document.getElementById('fireworks');
+    const emojis=['🎆','🎇','✨','🌟','💥','🎉'];
+    for(let i=0;i<12;i++){
+      setTimeout(()=>{
+        const f=document.createElement('div');
+        f.className='firework';
+        f.style.left=Math.random()*700+50+'px';
+        f.style.top=Math.random()*200+50+'px';
+        f.style.animationDelay=Math.random()*0.5+'s';
+        f.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+        fw.appendChild(f);
+        setTimeout(()=>f.remove(),1200);
+      },i*300);
+    }
+  }
+}
+function nextScene(){clearTimeout(sceneTimer);if(currentScene<scenes.length-1){showScene(currentScene+1);if(playing)scheduleNext();}}
+function prevScene(){clearTimeout(sceneTimer);if(currentScene>0){showScene(currentScene-1);if(playing)scheduleNext();}}
+function scheduleNext(){clearTimeout(sceneTimer);sceneTimer=setTimeout(()=>{if(currentScene<scenes.length-1){showScene(currentScene+1);scheduleNext();}},sceneDurations[currentScene]);}
+function togglePlay(){playing=!playing;document.getElementById('playBtn').textContent=playing?'⏸ PAUSE':'▶ PLAY';if(playing)scheduleNext();else clearTimeout(sceneTimer);}
+function updateProgress(){
+  if(!playing)return;
+  const pct=Math.min(100,((Date.now()-startTime)/60000)*100);
+  document.getElementById('progressBar').style.width=pct+'%';
+  const secs=Math.floor((Date.now()-startTime)/1000);
+  document.getElementById('timer').textContent=`${Math.floor(secs/60)}:${(secs%60).toString().padStart(2,'0')}`;
+  if(pct<100)requestAnimationFrame(updateProgress);
+}
+showScene(0);scheduleNext();requestAnimationFrame(updateProgress);
+</script>
+<div style="position:fixed;top:0;right:0;z-index:999;padding:6px 10px;display:flex;gap:6px;background:rgba(0,0,0,0.5);"><a href="../index.html" style="font-family:Bangers,cursive;color:#FFD700;text-decoration:none;font-size:0.85em;border:1px solid #FFD700;padding:2px 8px;border-radius:4px;">🏠 HOME</a><a href="ep5.html" style="font-family:Bangers,cursive;color:#ff69b4;text-decoration:none;font-size:0.85em;border:1px solid #ff69b4;padding:2px 8px;border-radius:4px;">◀ EP.5</a></div>
 </body>
 </html>
